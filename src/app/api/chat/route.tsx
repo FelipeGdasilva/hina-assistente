@@ -42,7 +42,9 @@ export async function POST(req: Request) {
 
     const response = await chat.sendMessage({ message: ultimaMensagem });
 
-    return new Response(JSON.stringify({ resposta: response.text }), {
+    const textoLimpo = response.text ? response.text.replaceAll('*', '') : "";
+
+    return new Response(JSON.stringify({ resposta: textoLimpo }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
