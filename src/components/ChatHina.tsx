@@ -76,9 +76,9 @@ export default  function ChatHina(){
             </div>
         
         <form  onSubmit={lidarComEnvio} className=" flex items-center gap-2 bg-slate-800/80 border border-purple-900/40 rounded-xl p-2 shadow-lg">
-            <input type="text" placeholder="Bora conversar?" value={pergunta} onChange={e => setPergunta(e.target.value)} onKeyDown={handlekeyDom} className="flex-1 bg-transparent text-white placeholder:bg-purple-500/30 foucs:outline-none px-2"/>
+            <input type="text" placeholder="Bora conversar?" value={pergunta} onChange={e => setPergunta(e.target.value)} onKeyDown={handlekeyDom} className="flex-1  min-w-0 bg-transparent text-white placeholder:bg-purple-500/30 foucs:outline-none px-2"/>
             
-             <button type="submit" className="bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">
+             <button type="submit" className="bg-purple-600 shrink-0 hover:bg-purple-500 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">
                 Enviar
              </button>
             
