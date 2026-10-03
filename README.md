@@ -2,7 +2,7 @@
 
 Uma interface de chat minimalista, moderna e fluida integrada à API do Google Gemini, focada em alta performance, UX limpa e retenção de contexto.
 
-![Demonstração da Hina](./public/hina-demo.gif)
+![Demonstração da Hina](./hina-demo.gif)
 
 ---
 
@@ -20,6 +20,14 @@ Nesta versão refatorada, o foco principal foi a **Engenharia de Software e UX/U
 - **Gerenciamento de Histórico Stateless:** Manipulação de arrays (`.map()`, `.slice()`) no Server-Side para formatar a memória da conversa antes de enviar para o SDK da Gemini API.
 - **System Prompt Personalizado:** Configuração avançada de diretrizes de personalidade (tom acolhedor, limitação de marcações indesejadas e resposta a Easter Eggs).
 - **TypeScript Strict:** Código 100% tipado e sem o uso de `any`, garantindo maior confiabilidade e prevenção de bugs em tempo de compilação.
+
+---
+
+## ⚡ Limitações e Rate Limit (API)
+
+Este projeto utiliza o plano gratuito (*Free Tier*) da API do Google Gemini.
+- **Limite de Requisições:** Em momentos de pico ou envios de mensagens muito frequentes, a API pode atingir o limite temporário de requisições por minuto (RPM).
+- **Tratamento de Erros:** A aplicação conta com um tratamento de exceções robusto via `try/catch`. Caso ocorra limite de cota ou instabilidade temporária na resposta da API, a interface exibirá uma mensagem amigável solicitando um breve intervalo antes do próximo envio.
 
 ---
 
