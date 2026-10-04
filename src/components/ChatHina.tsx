@@ -12,7 +12,8 @@ import { useEffect, useRef, useState } from "react";
 export default  function ChatHina(){
     const [pergunta, setPergunta] = useState("");
     const chatEndRef = useRef<HTMLDivElement | null>(null);
-    const [mensagens,setMensagens] = useState<Mensagem[]>([])
+    const [mensagens,setMensagens] = useState<Mensagem[]>([]);
+    const [senhaModoCriador, setSenhaModoCriador] = useState("");
 
     const handlekeyDom = (e: React.KeyboardEvent<HTMLInputElement>) =>{
         if(e.key === "Enter" && !e.shiftKey){
@@ -31,6 +32,9 @@ export default  function ChatHina(){
 
         if(!pergunta.trim()) return;
 
+        const textoDigitado = pergunta.trim();
+
+
         const novaMensagem = {id: Date.now(), text: pergunta, sender: "user"};
         setMensagens((prev) => [...prev, novaMensagem]);
         setPergunta("");
@@ -41,12 +45,17 @@ export default  function ChatHina(){
                 headers:{
                     "Content-Type" : "application/json",
                 },
-                body: JSON.stringify({mensagens: [...mensagens, novaMensagem]}),
+                body: JSON.stringify({mensagens: [...mensagens, novaMensagem], senhaDigitada: senhaModoCriador || textoDigitado,}),
+                
             });
             const data = await respostaAPI.json();
 
             if(!respostaAPI.ok){
                 throw new Error(data.error || "Erro na API da Hina")
+            }
+
+            if(data.isCreator){
+                setSenhaModoCriador(senhaModoCriador || textoDigitado);
             }
 
             setMensagens((prev) =>[

@@ -40,7 +40,17 @@ Este projeto utiliza o plano gratuito (*Free Tier*) da API do Google Gemini.
 - **Ícones:** [Lucide React](https://lucide.dev/)
 
 ---
+## 🔐 Autenticação Dinâmica & Modo Criador (Easter Egg)
 
+O projeto conta com um sistema inteligente de autenticação no lado do servidor (*Server-Side Validation*) para diferenciar visitantes comuns do criador da aplicação, sem expor credenciais no código do front-end.
+
+### 🚀 Como Funciona:
+- **Modo Visitante:** Qualquer pessoa pode interagir com a Hina normalmente. A API processa as mensagens utilizando o contexto base da assistente.
+- **Modo Criador:** Ao enviar a chave secreta diretamente na caixa de chat, a API do Next.js (`/api/chat`) valida a entrada contra a variável de ambiente (`ADMIN_SECRET_KEY`) armazenada com segurança no servidor.
+- **Sessão Persistente:** Uma vez validada a chave, o estado da aplicação mantém o Modo Criador ativo durante toda a sessão, ativando diretrizes exclusivas e um tom de resposta personalizado.
+
+> 🛡️ **Segurança:** Nenhuma chave ou palavra-passe está gravada no código-fonte do front-end (`ChatHina.tsx`), garantindo conformidade com as boas práticas de segurança ao publicar o projeto no GitHub e na Vercel.
+ ---
 ## 🚀 Como Executar o Projeto Localmente
 
 ### 1. Clone o repositório

@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-const SYSTEM_PROMPT = `Você é a Hina, uma assistente virtual inteligente, muito simpática, empática e acolhedora.
+const SYSTEM_PROMPT_BASE = `Você é a Hina, uma assistente virtual inteligente, muito simpática, empática e acolhedora.
 Sua missão é conversar com o usuário de forma natural, amigável e atenciosa, ajudando com o que ele precisar.
 
 Diretrizes de Personalidade e Comportamento:
@@ -21,7 +21,7 @@ Easter Egg / Informações do Criador:
   
 export async function POST(req: Request) {
   try {
-    const { mensagens } = await req.json();
+    const { mensagens, senhaDigitada } = await req.json();
 
     if (!mensagens || !Array.isArray(mensagens)) {
       return new Response(
@@ -29,6 +29,17 @@ export async function POST(req: Request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
+    
+    const isCreator = Boolean(
+      senhaDigitada && senhaDigitada === process.env.ADMIN_SECRET_KEY
+    );
+
+    let SYSTEM_PROMPT = SYSTEM_PROMPT_BASE;
+
+    if (isCreator){
+      SYSTEM_PROMPT += `\n\n[MODO CRIADOR ATIVADO]: O usuário atual enviou a chave secreta e foi AUTENTICADO como seu criador, o Felipe! Trate-o de forma personalizada como seu criador, com carinho e acesso total ao modo desenvolvedor.`;
+    }
+
     const ultimaMensagem = mensagens[mensagens.length - 1].text;
     
     const historicoFormatado = mensagens.slice(0, -1).map((msg: {sender: string; content: string}) => ({
